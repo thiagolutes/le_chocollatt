@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LeChocolat
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3.
@@ -57,3 +58,7 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+=======
+# le_chocollatt
+Site da le_chocollatt
+>>>>>>> c15a09ecdffc47ae9d36c2eb26219cc86e8010a0
