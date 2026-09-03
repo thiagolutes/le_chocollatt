@@ -1,0 +1,105 @@
+:host {
+  display: block;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.rotulo {
+  font-size: var(--texto-sm);
+  color: var(--cor-marrom-escuro);
+  font-weight: 600;
+}
+
+.marcaObrigatorio {
+  color: var(--cor-erro);
+  margin-left: var(--espaco-1);
+}
+
+.opcoesModalidade {
+  position: relative;
+  display: flex;
+  padding: 0.25rem;
+  background-color: var(--cor-fundo-apoio);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-grande);
+}
+
+/* Fundo que desliza pra baixo da opção ativa — mais vivo que só trocar a cor. */
+.indicadorModalidade {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: calc(50% - 0.25rem);
+  height: calc(100% - 0.5rem);
+  background-color: var(--cor-marrom-escuro);
+  border-radius: calc(var(--raio-grande) - 0.25rem);
+  transition: transform var(--duracao-transicao-painel) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.indicadorModalidade.entrega {
+  transform: translateX(100%);
+}
+
+.opcaoModalidade {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaco-2);
+  padding: 0.65rem 1rem;
+  border-radius: calc(var(--raio-grande) - 0.25rem);
+  font-size: var(--texto-sm);
+  color: var(--cor-marrom-medio);
+  text-align: center;
+  cursor: pointer;
+  transition: color var(--duracao-transicao) ease, transform var(--duracao-transicao) ease;
+}
+
+.opcaoModalidade svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
+}
+
+.opcaoModalidade:hover {
+  color: var(--cor-marrom-escuro);
+}
+
+.opcaoModalidade:active {
+  transform: scale(0.98);
+}
+
+.opcaoModalidade.selecionada {
+  color: var(--cor-creme-secundario);
+}
+
+.entradaComIcone {
+  position: relative;
+  display: flex;
+}
+
+.iconeEntrada {
+  position: absolute;
+  left: 0.9rem;
+  top: 0.85rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--cor-marrom-suave);
+  pointer-events: none;
+}
+
+.campoComIcone {
+  padding-left: 2.6rem;
+}

@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--espaco-4);
+}
+
+@media (min-width: 640px) {
+  .grade {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .grade {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.vazio {
+  text-align: center;
+  padding-block: var(--espaco-8);
+  color: var(--cor-marrom-suave);
+  font-style: italic;
+}

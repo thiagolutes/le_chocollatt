@@ -1,0 +1,69 @@
+/**
+ * Tokens visuais da marca Le Chocolat.
+ * Baseados na análise dos materiais oficiais (cardápio, logo e posts).
+ * Centralizar aqui permite trocar cores/fontes sem tocar nos componentes.
+ */
+:root {
+  /*
+   * A marca é sempre clara (fundo creme), mesmo em dispositivos/navegadores
+   * configurados para modo escuro. Sem isso, alguns navegadores reprocessam
+   * cores de imagens e controles automaticamente (ex.: SVGs claros saindo
+   * azulados), o que quebra a identidade visual.
+   */
+  color-scheme: light;
+
+  /* Cores — fundo claro e acentos em marrom/dourado, nunca interface escura */
+  --cor-creme-principal: #f7e9dc;
+  --cor-creme-secundario: #fff8f1;
+  --cor-marrom-escuro: #3d2619;
+  --cor-marrom-medio: #684735;
+  --cor-dourado: #b89a6a;
+  --cor-marrom-suave: #8d735c;
+  --cor-texto-neutro: #51443b;
+  --cor-fundo-apoio: #efe0d2;
+  --cor-branco: #ffffff;
+  --cor-erro: #9a3b2e;
+
+  --cor-borda: rgba(61, 38, 25, 0.2);
+  --cor-borda-forte: rgba(61, 38, 25, 0.38);
+  --cor-foco: #684735;
+  --cor-sobreposicao: rgba(61, 38, 25, 0.35);
+
+  /* Tipografia — serifada em todo o site, sem fontes "de interface" */
+  --fonte-titulo: "Didot", "GFS Didot", Georgia, "Times New Roman", serif;
+  --fonte-corpo: "Lora", Georgia, "Times New Roman", serif;
+
+  --texto-xs: 0.75rem;
+  --texto-sm: 0.875rem;
+  --texto-base: 1rem;
+  --texto-md: 1.125rem;
+  --texto-lg: 1.375rem;
+  --texto-xl: 1.75rem;
+  --texto-xxl: 2.25rem;
+
+  --tracking-versalete: 0.12em;
+
+  /* Espaçamento generoso, em escala consistente */
+  --espaco-1: 0.25rem;
+  --espaco-2: 0.5rem;
+  --espaco-3: 0.75rem;
+  --espaco-4: 1rem;
+  --espaco-5: 1.5rem;
+  --espaco-6: 2rem;
+  --espaco-7: 3rem;
+  --espaco-8: 4rem;
+
+  /* Bordas discretas — sem sombras pesadas nem cantos muito arredondados */
+  --raio-pequeno: 3px;
+  --raio-medio: 6px;
+  --raio-grande: 10px;
+  --borda-fina: 1px solid var(--cor-borda);
+  --borda-media: 1px solid var(--cor-borda-forte);
+  --sombra-suave: 0 2px 14px rgba(61, 38, 25, 0.1);
+
+  --largura-maxima-conteudo: 1180px;
+  --largura-maxima-leitura: 46rem;
+  --altura-cabecalho: 4.75rem;
+  --duracao-transicao: 160ms;
+  --duracao-transicao-painel: 220ms;
+}

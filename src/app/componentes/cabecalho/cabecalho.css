@@ -1,0 +1,75 @@
+:host {
+  display: block;
+}
+
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background-color: var(--cor-creme-secundario);
+  border-bottom: var(--borda-fina);
+}
+
+.conteudo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--espaco-3);
+  gap: var(--espaco-4);
+}
+
+.botaoCarrinho {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: transparent;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-pequeno);
+  color: var(--cor-marrom-escuro);
+  flex-shrink: 0;
+  transition: background-color var(--duracao-transicao) ease, border-color var(--duracao-transicao) ease,
+    transform var(--duracao-transicao) ease;
+}
+
+.botaoCarrinho:hover {
+  background-color: var(--cor-fundo-apoio);
+  border-color: var(--cor-marrom-escuro);
+  transform: scale(1.05);
+}
+
+.botaoCarrinho:active {
+  transform: scale(0.95);
+}
+
+.iconeSacola {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.contador {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  padding-inline: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cor-marrom-escuro);
+  color: var(--cor-creme-secundario);
+  border-radius: 999px;
+  font-size: 0.65rem;
+  line-height: 1;
+}
+
+.frase {
+  text-align: center;
+  font-style: italic;
+  font-size: var(--texto-sm);
+  color: var(--cor-marrom-medio);
+  padding-bottom: var(--espaco-3);
+}

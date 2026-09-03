@@ -1,0 +1,11 @@
+<div class="marca" [class.grande]="tamanho() === 'grande'">
+  @if (como() === 'h1') {
+    <h1 class="nome">
+      <img class="imagemLogo" src="/logo/logo.png" [alt]="nomeLoja + ' — ' + subtituloLoja" />
+    </h1>
+  } @else {
+    <p class="nome">
+      <img class="imagemLogo" src="/logo/logo.png" [alt]="nomeLoja + ' — ' + subtituloLoja" />
+    </p>
+  }
+</div>

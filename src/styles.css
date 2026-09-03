@@ -1,0 +1,174 @@
+@import "./app/estilos/variaveis.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: var(--cor-creme-principal);
+  color: var(--cor-texto-neutro);
+  font-family: var(--fonte-corpo);
+  font-size: var(--texto-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-marrom-escuro);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  color: var(--cor-marrom-medio);
+}
+
+/* Foco visível e consistente em toda a aplicação */
+:focus-visible {
+  outline: 2px solid var(--cor-foco);
+  outline-offset: 2px;
+  border-radius: var(--raio-pequeno);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--largura-maxima-conteudo);
+  margin-inline: auto;
+  padding-inline: var(--espaco-4);
+}
+
+.somente-leitor-tela {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.rotulo-versalete {
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-versalete);
+  font-size: var(--texto-xs);
+  color: var(--cor-marrom-medio);
+}
+
+/* Estilo compartilhado para inputs/selects/textareas em todo o site */
+.entrada {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background-color: var(--cor-creme-secundario);
+  border: 1.5px solid var(--cor-borda);
+  border-radius: var(--raio-grande);
+  color: var(--cor-marrom-escuro);
+  font-family: var(--fonte-corpo);
+  font-size: var(--texto-base);
+  box-shadow: inset 0 1px 2px rgba(61, 38, 25, 0.05);
+  transition: border-color var(--duracao-transicao) ease, box-shadow var(--duracao-transicao) ease,
+    background-color var(--duracao-transicao) ease;
+}
+
+.entrada::placeholder {
+  color: var(--cor-marrom-suave);
+  opacity: 0.75;
+}
+
+.entrada:hover {
+  border-color: var(--cor-marrom-suave);
+}
+
+/* Foco mais suave (anel) do que o outline padrão do navegador, mas ainda bem visível */
+.entrada:focus-visible {
+  outline: none;
+  border-color: var(--cor-marrom-escuro);
+  background-color: var(--cor-branco);
+  box-shadow: 0 0 0 4px rgba(104, 71, 53, 0.14);
+}
+
+/* Angular marca campos de formulário inválidos e já tocados com estas classes automaticamente */
+.entrada.ng-invalid.ng-touched {
+  border-color: var(--cor-erro);
+}
+
+.entrada.ng-invalid.ng-touched:focus-visible {
+  box-shadow: 0 0 0 4px rgba(154, 59, 46, 0.14);
+}
+
+/* Recolore e "encorpa" o ícone nativo do seletor de data pra combinar com a marca (Chrome/Edge/Safari) */
+input[type='date'].entrada::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.75;
+  padding: 0.3rem;
+  margin-right: -0.2rem;
+  border-radius: var(--raio-pequeno);
+  filter: invert(19%) sepia(24%) saturate(1500%) hue-rotate(340deg) brightness(85%) contrast(95%);
+  transition: opacity var(--duracao-transicao) ease, background-color var(--duracao-transicao) ease;
+}
+
+input[type='date'].entrada::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  background-color: var(--cor-fundo-apoio);
+}
+
+textarea.entrada {
+  resize: vertical;
+  min-height: 5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

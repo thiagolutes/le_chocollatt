@@ -1,0 +1,18 @@
+@if (carrinhoServico.itemAdicionado()) {
+  <div class="notificacao" role="status">
+    <div class="icone" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+    </div>
+
+    <div class="corpo">
+      <p class="texto">Item adicionado ao carrinho com sucesso!</p>
+      <app-botao variante="texto" (click)="irParaCarrinho()">Ir para o carrinho</app-botao>
+    </div>
+
+    <button type="button" class="botaoFechar" aria-label="Fechar notificação" (click)="fechar()">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+}

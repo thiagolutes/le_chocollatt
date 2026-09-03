@@ -1,0 +1,89 @@
+:host {
+  display: block;
+}
+
+.revisao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+}
+
+.secao {
+  padding-bottom: var(--espaco-4);
+  border-bottom: var(--borda-fina);
+}
+
+.secao:last-of-type {
+  border-bottom: none;
+}
+
+.tituloSecao {
+  font-size: var(--texto-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-versalete);
+  color: var(--cor-marrom-medio);
+  margin-bottom: var(--espaco-3);
+}
+
+.listaDados {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  margin: 0;
+}
+
+.listaDados > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  font-size: var(--texto-sm);
+}
+
+.listaDados dt {
+  color: var(--cor-marrom-suave);
+}
+
+.listaDados dd {
+  margin: 0;
+  color: var(--cor-marrom-escuro);
+  text-align: right;
+}
+
+.listaProdutosRevisao {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.itemRevisao {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-neutro);
+}
+
+.subtotalItem {
+  white-space: nowrap;
+  color: var(--cor-marrom-escuro);
+}
+
+.totalRevisao {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--espaco-3);
+  padding-top: var(--espaco-3);
+  border-top: var(--borda-fina);
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-md);
+  color: var(--cor-marrom-escuro);
+}
+
+.observacoes {
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-neutro);
+  white-space: pre-wrap;
+}

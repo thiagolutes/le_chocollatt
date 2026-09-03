@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+.navegacao {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.navegacao::-webkit-scrollbar {
+  display: none;
+}
+
+.lista {
+  display: flex;
+  gap: var(--espaco-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-bottom: var(--espaco-1);
+}
+
+.pilula {
+  flex-shrink: 0;
+  padding: 0.5rem 1.1rem;
+  background-color: transparent;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-pequeno);
+  color: var(--cor-marrom-medio);
+  font-size: var(--texto-sm);
+  white-space: nowrap;
+  transition: background-color var(--duracao-transicao) ease, border-color var(--duracao-transicao) ease,
+    color var(--duracao-transicao) ease, transform var(--duracao-transicao) ease;
+}
+
+.pilula:hover {
+  background-color: var(--cor-fundo-apoio);
+  border-color: var(--cor-marrom-escuro);
+  transform: translateY(-1px);
+}
+
+.pilula:active {
+  transform: translateY(0);
+}
+
+.pilula.ativa {
+  background-color: var(--cor-marrom-escuro);
+  border-color: var(--cor-marrom-escuro);
+  color: var(--cor-creme-secundario);
+}
+
+.pilula.ativa:hover {
+  filter: brightness(0.85);
+}

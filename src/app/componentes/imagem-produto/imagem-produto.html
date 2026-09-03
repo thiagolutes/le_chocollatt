@@ -1,0 +1,26 @@
+@if (falhouCarregamento()) {
+  <div
+    class="espacoReservado"
+    [class.quadrada]="proporcao() === 'quadrada'"
+    [class.retangular]="proporcao() === 'retangular'"
+    role="img"
+    [attr.aria-label]="produto().nome"
+  >
+    <app-icone-categoria class="iconeFallback" [class.destacado]="destacado()" [categoria]="produto().categoria" />
+  </div>
+} @else {
+  <div
+    class="moldura"
+    [class.quadrada]="proporcao() === 'quadrada'"
+    [class.retangular]="proporcao() === 'retangular'"
+  >
+    <img
+      [src]="produto().imagem"
+      [alt]="produto().nome"
+      loading="lazy"
+      (error)="marcarFalha()"
+      class="imagem"
+      [class.destacado]="destacado()"
+    />
+  </div>
+}

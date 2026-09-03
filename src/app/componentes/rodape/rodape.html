@@ -1,0 +1,32 @@
+<footer class="rodape">
+  <div class="container conteudo">
+    <app-marca />
+
+    <app-ornamento />
+
+    <div class="grade">
+      <section class="bloco">
+        <h3 class="tituloBloco">Onde estamos</h3>
+        <p>{{ config.cidade }} - {{ config.estado }}</p>
+      </section>
+
+      <section class="bloco">
+        <h3 class="tituloBloco">Encomendas</h3>
+        <p>Encomendas com pelo menos {{ config.diasMinimosEncomenda }} dias de antecedência.</p>
+        <p>Consulte disponibilidade para grandes quantidades e datas especiais.</p>
+      </section>
+
+      <section class="bloco">
+        <h3 class="tituloBloco">Pagamento</h3>
+        <p>{{ config.formasPagamento.join(' · ') }}</p>
+      </section>
+
+      <section class="bloco">
+        <h3 class="tituloBloco">Contato</h3>
+        <p>Envie uma mensagem via Direct: {{ config.instagram }}</p>
+      </section>
+    </div>
+
+    <p class="frase">{{ config.fraseCmpl }}</p>
+  </div>
+</footer>

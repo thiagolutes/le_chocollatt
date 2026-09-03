@@ -1,0 +1,18 @@
+<section class="container pagina">
+  <div class="filtros">
+    <app-busca-produtos [(termo)]="termoBusca" />
+    <app-navegacao-categorias [categorias]="categorias" [(categoriaSelecionada)]="categoriaSelecionada" />
+  </div>
+
+  <app-lista-produtos [produtos]="produtosFiltrados()" (abrirProduto)="produtoSelecionado.set($event)" />
+</section>
+
+@if (produtoSelecionado(); as produto) {
+  <app-modal-produto
+    [produto]="produto"
+    [mostrarNavegacaoProdutos]="mostrarNavegacaoProdutos()"
+    (fechar)="produtoSelecionado.set(undefined)"
+    (produtoAnterior)="irParaProdutoAnterior()"
+    (produtoProximo)="irParaProximoProduto()"
+  />
+}

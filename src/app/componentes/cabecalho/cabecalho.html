@@ -1,0 +1,31 @@
+<header class="cabecalho">
+  <div class="container conteudo">
+    <app-marca como="h1" />
+
+    <button
+      type="button"
+      class="botaoCarrinho"
+      (click)="carrinhoServico.abrirCarrinho()"
+      [attr.aria-label]="'Abrir carrinho, ' + carrinhoServico.carrinho().quantidadeTotal + ' itens'"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="iconeSacola">
+        <path
+          d="M6 8h12l-1 12.5a2 2 0 0 1-2 1.5H9a2 2 0 0 1-2-1.5L6 8Z"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.4"
+          stroke-linejoin="round"
+        />
+        <path d="M9 8V6.5a3 3 0 0 1 6 0V8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+      </svg>
+      <span class="somente-leitor-tela">Carrinho</span>
+      @if (carrinhoServico.carrinho().quantidadeTotal > 0) {
+        <span class="contador">{{ carrinhoServico.carrinho().quantidadeTotal }}</span>
+      }
+    </button>
+  </div>
+
+  @if (frase) {
+    <p class="container frase">{{ frase }}</p>
+  }
+</header>

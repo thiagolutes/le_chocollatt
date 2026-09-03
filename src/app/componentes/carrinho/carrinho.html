@@ -1,0 +1,93 @@
+<div class="fundo" [class.fechando]="fechando()" (click)="aoClicarFundo($event)" (keydown.escape)="iniciarFechamento()">
+  <aside
+    class="painel"
+    [class.fechando]="fechando()"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Carrinho de compras"
+    tabindex="-1"
+    #painel
+  >
+    <div class="cabecalhoPainel">
+      <h2 class="titulo">{{ titulo() }}</h2>
+      <button type="button" class="botaoFechar" (click)="iniciarFechamento()" aria-label="Fechar carrinho">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+
+    @if (carrinhoServico.avisos().length > 0) {
+      <div class="avisos" role="alert">
+        @for (aviso of carrinhoServico.avisos(); track $index) {
+          <p>{{ aviso.mensagem }}</p>
+        }
+        <button type="button" class="botaoEntendi" (click)="carrinhoServico.limparAvisos()">Entendi</button>
+      </div>
+    }
+
+    <div class="corpo">
+      @switch (etapa()) {
+        @case ('carrinho') {
+          @if (carrinhoServico.carrinho().itens.length === 0) {
+            <p class="vazio">Seu carrinho está vazio.</p>
+          } @else {
+            <ul class="listaItens">
+              @for (item of carrinhoServico.carrinho().itens; track item.produtoId + (item.variacaoId ?? '')) {
+                <app-item-carrinho [item]="item" />
+              }
+            </ul>
+          }
+        }
+        @case ('formulario') {
+          <app-formulario-pedido [valorInicial]="dadosCliente()" (enviar)="aoReceberDadosCliente($event)" />
+        }
+        @case ('revisao') {
+          <app-revisao-pedido [dadosCliente]="dadosCliente()" [carrinho]="carrinhoServico.carrinho()" />
+        }
+        @case ('enviado') {
+          <div class="confirmacaoEnvio">
+            <p class="confirmacaoTexto">
+              Sua mensagem foi copiada! Abra o Instagram e cole (Ctrl+V) na conversa com a gente para completar seu pedido.
+            </p>
+            <div class="mensagemPronta">
+              <pre>{{ mensagemEnviada() }}</pre>
+            </div>
+          </div>
+        }
+      }
+    </div>
+
+    @if (mostrarRodape()) {
+      <div class="rodapePainel">
+        @switch (etapa()) {
+          @case ('carrinho') {
+            <div class="linhaTotal">
+              <span>Total</span>
+              <span class="valorTotal">{{ formatarMoeda(carrinhoServico.carrinho().total) }}</span>
+            </div>
+            <app-botao [larguraTotal]="true" (click)="etapa.set('formulario')">Finalizar pedido</app-botao>
+          }
+          @case ('formulario') {
+            <div class="acoesRodape">
+              <app-botao variante="texto" (click)="etapa.set('carrinho')">Voltar ao carrinho</app-botao>
+              <app-botao tipo="submit" formulario="formulario-pedido">Revisar pedido</app-botao>
+            </div>
+          }
+          @case ('revisao') {
+            <div class="acoesRodape">
+              <app-botao variante="texto" (click)="etapa.set('formulario')">Voltar e editar</app-botao>
+              <app-botao (click)="aoConfirmarPedido()">Confirmar e enviar via Instagram</app-botao>
+            </div>
+          }
+          @case ('enviado') {
+            <div class="acoesRodape">
+              <app-botao variante="texto" (click)="iniciarFechamento()">Fechar</app-botao>
+              <app-botao [larguraTotal]="false" (click)="enviarViaInstagram()">Enviar via Instagram</app-botao>
+            </div>
+          }
+        }
+      </div>
+    }
+  </aside>
+</div>

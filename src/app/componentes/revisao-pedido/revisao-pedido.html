@@ -1,0 +1,59 @@
+<div class="revisao">
+  <section class="secao">
+    <h3 class="tituloSecao">Dados do cliente</h3>
+    <dl class="listaDados">
+      <div>
+        <dt>Nome</dt>
+        <dd>{{ dadosCliente().nome }}</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="secao">
+    <h3 class="tituloSecao">Atendimento</h3>
+    <dl class="listaDados">
+      <div>
+        <dt>Modalidade</dt>
+        <dd>{{ dadosCliente().modalidade === 'entrega' ? 'Entrega' : 'Retirada' }}</dd>
+      </div>
+      <div>
+        <dt>Data desejada</dt>
+        <dd>{{ formatarDataBrasileira(dadosCliente().dataDesejada) }}</dd>
+      </div>
+      @if (dadosCliente().modalidade === 'entrega') {
+        <div>
+          <dt>Endereço</dt>
+          <dd>{{ dadosCliente().endereco }}</dd>
+        </div>
+      }
+    </dl>
+  </section>
+
+  <section class="secao">
+    <h3 class="tituloSecao">Pedido</h3>
+    <ul class="listaProdutosRevisao">
+      @for (item of carrinho().itens; track item.produtoId + (item.variacaoId ?? '')) {
+        <li class="itemRevisao">
+          <span class="descricaoItem">
+            {{ item.quantidade }}x {{ item.produto.nome }}
+            @if (item.variacao) {
+              — {{ item.variacao.nome }}
+            }
+          </span>
+          <span class="subtotalItem">{{ formatarMoeda(item.subtotal) }}</span>
+        </li>
+      }
+    </ul>
+    <div class="totalRevisao">
+      <span>Total</span>
+      <span class="valorTotal">{{ formatarMoeda(carrinho().total) }}</span>
+    </div>
+  </section>
+
+  @if (dadosCliente().observacoes) {
+    <section class="secao">
+      <h3 class="tituloSecao">Observações</h3>
+      <p class="observacoes">{{ dadosCliente().observacoes }}</p>
+    </section>
+  }
+</div>

@@ -1,0 +1,46 @@
+:host {
+  display: block;
+}
+
+.pagina {
+  min-height: 60dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--espaco-3);
+  padding-block: var(--espaco-8);
+}
+
+.codigo {
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-xxl);
+  color: var(--cor-dourado);
+}
+
+.titulo {
+  font-size: var(--texto-lg);
+}
+
+.mensagem {
+  max-width: 28rem;
+  color: var(--cor-texto-neutro);
+}
+
+.botaoInicio {
+  margin-top: var(--espaco-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--raio-pequeno);
+  background-color: var(--cor-marrom-escuro);
+  color: var(--cor-creme-secundario);
+  text-decoration: none;
+  font-size: var(--texto-sm);
+}
+
+.botaoInicio:hover {
+  background-color: var(--cor-marrom-medio);
+}

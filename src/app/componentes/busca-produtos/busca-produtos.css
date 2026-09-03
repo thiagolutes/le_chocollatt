@@ -1,0 +1,22 @@
+:host {
+  display: block;
+}
+
+.busca {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icone {
+  position: absolute;
+  left: 0.85rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--cor-marrom-suave);
+  pointer-events: none;
+}
+
+.campoBusca {
+  padding-left: 2.5rem;
+}

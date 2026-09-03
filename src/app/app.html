@@ -1,0 +1,13 @@
+<app-cabecalho />
+
+<main class="conteudoPrincipal">
+  <router-outlet />
+</main>
+
+<app-rodape />
+
+@if (carrinhoServico.aberto()) {
+  <app-carrinho (fechar)="carrinhoServico.fecharCarrinho()" />
+}
+
+<app-notificacao-carrinho />

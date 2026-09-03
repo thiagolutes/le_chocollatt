@@ -1,0 +1,9 @@
+@if (produtos().length === 0) {
+  <p class="vazio">Nenhum produto encontrado. Tente outra busca ou categoria.</p>
+} @else {
+  <div class="grade">
+    @for (produto of produtos(); track produto.id) {
+      <app-cartao-produto [produto]="produto" (abrir)="abrirProduto.emit($event)" />
+    }
+  </div>
+}

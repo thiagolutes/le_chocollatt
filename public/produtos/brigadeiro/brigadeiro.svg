@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#F7E9DC" />
+  <rect x="24" y="24" width="752" height="552" fill="none" stroke="#3D2619" stroke-width="1.5" />
+  <circle cx="400" cy="240" r="90" fill="#684735" />
+  <path d="M400 150v24M478 192l-20.8 12M478 288l-20.8-12M400 330v-24M322 288l20.8-12M322 192l20.8 12" stroke="#B89A6A" stroke-width="4" stroke-linecap="round" />
+  <text x="400" y="420" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" fill="#3D2619">Brigadeiro</text>
+  <text x="400" y="456" text-anchor="middle" font-family="Georgia, serif" font-size="16" letter-spacing="2" fill="#8D735C">FOTO ILUSTRATIVA — GERAL</text>
+</svg>

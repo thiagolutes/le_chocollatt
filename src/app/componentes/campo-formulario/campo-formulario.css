@@ -1,0 +1,26 @@
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.rotulo {
+  font-size: var(--texto-sm);
+  color: var(--cor-marrom-escuro);
+  font-weight: 600;
+}
+
+.marcaObrigatorio {
+  color: var(--cor-erro);
+  margin-left: var(--espaco-1);
+}
+
+.dica {
+  font-size: var(--texto-xs);
+  color: var(--cor-marrom-suave);
+}
+
+.erro {
+  font-size: var(--texto-xs);
+  color: var(--cor-erro);
+}

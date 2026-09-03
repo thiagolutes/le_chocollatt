@@ -1,0 +1,18 @@
+.ornamento {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  color: var(--cor-dourado);
+  margin-block: var(--espaco-4);
+}
+
+.linha {
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.losango {
+  flex-shrink: 0;
+}

@@ -1,0 +1,17 @@
+<div class="campo">
+  <label [for]="idCampo()" class="rotulo">
+    {{ rotulo() }}
+    @if (obrigatorio()) {
+      <span class="marcaObrigatorio" aria-hidden="true">*</span>
+    }
+  </label>
+
+  <ng-content></ng-content>
+
+  @if (dica() && !erro()) {
+    <p [id]="idCampo() + '-dica'" class="dica">{{ dica() }}</p>
+  }
+  @if (erro()) {
+    <p [id]="idCampo() + '-erro'" class="erro" role="alert">{{ erro() }}</p>
+  }
+</div>

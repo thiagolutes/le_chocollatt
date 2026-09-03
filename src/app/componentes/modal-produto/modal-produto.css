@@ -1,0 +1,332 @@
+:host {
+  display: block;
+}
+
+@keyframes fundoEntra {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fundoSai {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes painelEntra {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+}
+
+@keyframes painelSai {
+  to {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+}
+
+.fundo {
+  position: fixed;
+  inset: 0;
+  background-color: var(--cor-sobreposicao);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 50;
+  animation: fundoEntra var(--duracao-transicao-painel) ease both;
+}
+
+.fundo.fechando {
+  animation: fundoSai var(--duracao-transicao-painel) ease both;
+}
+
+@media (min-width: 640px) {
+  .fundo {
+    align-items: center;
+    padding: var(--espaco-4);
+  }
+}
+
+.painel {
+  background-color: var(--cor-creme-principal);
+  width: 100%;
+  max-width: 32rem;
+  /*
+   * Altura sempre igual entre produtos (não encolhe pra caber o conteúdo) —
+   * o que varia é só quanto do `.conteudo` fica visível sem rolar. Em telas
+   * baixas, o limite de 92dvh evita estourar a viewport.
+   */
+  height: min(47rem, 92dvh);
+  border-radius: var(--raio-medio) var(--raio-medio) 0 0;
+  border: var(--borda-fina);
+  box-shadow: var(--sombra-suave);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  animation: painelEntra var(--duracao-transicao-painel) cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+.painel.fechando {
+  animation: painelSai var(--duracao-transicao-painel) ease both;
+}
+
+@media (min-width: 640px) {
+  .painel {
+    border-radius: var(--raio-medio);
+  }
+}
+
+.botaoFechar {
+  position: absolute;
+  top: var(--espaco-3);
+  right: var(--espaco-3);
+  z-index: 1;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cor-creme-secundario);
+  border: var(--borda-fina);
+  border-radius: var(--raio-pequeno);
+  color: var(--cor-marrom-escuro);
+  transition: background-color var(--duracao-transicao) ease, transform var(--duracao-transicao) ease;
+}
+
+.botaoFechar:hover {
+  background-color: var(--cor-fundo-apoio);
+  transform: rotate(90deg);
+}
+
+.botaoFechar svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+@keyframes saiParaEsquerda {
+  to {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+}
+
+@keyframes saiParaDireita {
+  to {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+}
+
+.setaProduto {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cor-creme-secundario);
+  border: var(--borda-media);
+  border-radius: 999px;
+  color: var(--cor-marrom-escuro);
+  box-shadow: var(--sombra-suave);
+  transition: background-color var(--duracao-transicao) ease, transform var(--duracao-transicao) ease;
+}
+
+.setaProduto svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.setaProduto:hover {
+  background-color: var(--cor-fundo-apoio);
+}
+
+.setaProduto:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+/*
+ * Sempre para DENTRO do painel (nunca com posição negativa) — um deslocamento
+ * negativo pode empurrar o botão para fora da área visível da janela
+ * dependendo da largura da tela, deixando-o impossível de clicar mesmo
+ * aparecendo "quase" no lugar certo.
+ */
+.setaProdutoAnterior {
+  left: 0.6rem;
+}
+
+.setaProdutoProxima {
+  right: 0.6rem;
+}
+
+.conteudo {
+  padding: var(--espaco-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.conteudo.saindoProxima {
+  animation: saiParaEsquerda 180ms ease forwards;
+}
+
+.conteudo.saindoAnterior {
+  animation: saiParaDireita 180ms ease forwards;
+}
+
+.nome {
+  font-size: var(--texto-lg);
+}
+
+.descricao {
+  color: var(--cor-texto-neutro);
+  font-size: var(--texto-sm);
+}
+
+.rotuloSecao {
+  display: block;
+  margin-bottom: var(--espaco-2);
+  font-size: var(--texto-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-versalete);
+  color: var(--cor-marrom-medio);
+  border: none;
+  padding: 0;
+}
+
+.variacoes {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+}
+
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-pequeno);
+  font-size: var(--texto-sm);
+  color: var(--cor-marrom-escuro);
+  transition: background-color var(--duracao-transicao) ease, border-color var(--duracao-transicao) ease,
+    color var(--duracao-transicao) ease, transform var(--duracao-transicao) ease;
+}
+
+.opcao:hover {
+  border-color: var(--cor-marrom-escuro);
+  transform: translateY(-1px);
+}
+
+.opcao.selecionada {
+  background-color: var(--cor-marrom-escuro);
+  border-color: var(--cor-marrom-escuro);
+  color: var(--cor-creme-secundario);
+}
+
+.opcao.selecionada:hover {
+  filter: brightness(0.9);
+}
+
+.linhaQuantidade {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.seletorQuantidade {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-pequeno);
+  padding: 0.25rem 0.5rem;
+}
+
+.seletorQuantidade button {
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  font-size: var(--texto-lg);
+  color: var(--cor-marrom-escuro);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--raio-pequeno);
+  transition: background-color var(--duracao-transicao) ease, transform var(--duracao-transicao) ease;
+}
+
+.seletorQuantidade button:hover:not(:disabled) {
+  background-color: var(--cor-fundo-apoio);
+}
+
+.seletorQuantidade button:active:not(:disabled) {
+  transform: scale(0.9);
+}
+
+.seletorQuantidade button:disabled {
+  opacity: 0.4;
+}
+
+.seletorQuantidade span {
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.inputQuantidade {
+  width: 2rem;
+  height: 2rem;
+  text-align: center;
+  font-size: var(--texto-base);
+  border: none;
+  background: transparent;
+  color: var(--cor-marrom-escuro);
+  font-family: var(--fonte-corpo);
+  padding: 0;
+
+  /* Remover spinners do input number */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+.inputQuantidade:focus {
+  outline: none;
+}
+
+.rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  padding: var(--espaco-4) var(--espaco-5);
+  border-top: var(--borda-media);
+  flex-shrink: 0;
+}
+
+.subtotal {
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-lg);
+  color: var(--cor-marrom-escuro);
+}

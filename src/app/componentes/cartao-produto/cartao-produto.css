@@ -1,0 +1,93 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.cartao {
+  height: 100%;
+}
+
+.botaoCartao {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  background-color: var(--cor-creme-secundario);
+  border: var(--borda-fina);
+  border-radius: var(--raio-medio);
+  overflow: hidden;
+  padding: 0;
+  transition: border-color var(--duracao-transicao) ease, transform var(--duracao-transicao) ease,
+    box-shadow var(--duracao-transicao) ease;
+}
+
+.botaoCartao:hover:not(:disabled) {
+  border-color: var(--cor-borda-forte);
+  transform: translateY(-3px);
+  box-shadow: var(--sombra-suave);
+}
+
+.botaoCartao:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.botaoCartao:disabled {
+  opacity: 0.6;
+}
+
+/*
+ * Todo card tem exatamente a mesma altura, não importa o tamanho do nome ou
+ * da descrição — se o texto não couber, essa área ganha scroll interno
+ * próprio em vez de esticar o card (e desalinhar a grade).
+ */
+.info {
+  display: flex;
+  flex-direction: column;
+  padding: var(--espaco-3) var(--espaco-4) var(--espaco-4);
+  height: 10.5rem;
+}
+
+.textoCartao {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.destaque {
+  color: var(--cor-dourado);
+}
+
+.nome {
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-md);
+  color: var(--cor-marrom-escuro);
+  font-weight: 600;
+}
+
+.descricao {
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-neutro);
+}
+
+.rodapeCartao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--espaco-2);
+  flex-shrink: 0;
+}
+
+.preco {
+  font-family: var(--fonte-titulo);
+  font-size: var(--texto-md);
+  color: var(--cor-marrom-escuro);
+}
+
+.indisponivelRotulo {
+  font-size: var(--texto-xs);
+  color: var(--cor-erro);
+}

@@ -1,0 +1,61 @@
+<form class="formulario" [id]="idFormulario" [formGroup]="formulario" (ngSubmit)="aoSubmeter()" novalidate>
+  <app-campo-formulario idCampo="nome" rotulo="Nome completo" [obrigatorio]="true" [erro]="erroDoCampo('nome')">
+    <div class="entradaComIcone">
+      <svg class="iconeEntrada" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.6" fill="none" />
+        <path d="M4.5 20c1.3-4 4.3-6 7.5-6s6.2 2 7.5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none" />
+      </svg>
+      <input
+        id="nome"
+        type="text"
+        class="entrada campoComIcone"
+        formControlName="nome"
+        autocomplete="name"
+        placeholder="Como podemos te chamar?"
+      />
+    </div>
+  </app-campo-formulario>
+
+  <div class="campo">
+    <span class="rotulo">Modalidade<span class="marcaObrigatorio" aria-hidden="true">*</span></span>
+    <div class="opcoesModalidade" role="radiogroup" aria-label="Modalidade de atendimento">
+      <div class="indicadorModalidade" [class.entrega]="formulario.controls.modalidade.value === 'entrega'" aria-hidden="true"></div>
+      <label class="opcaoModalidade" [class.selecionada]="formulario.controls.modalidade.value === 'retirada'">
+        <input type="radio" class="somente-leitor-tela" formControlName="modalidade" value="retirada" />
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none" /><path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none" /></svg>
+        Retirada
+      </label>
+      <label class="opcaoModalidade" [class.selecionada]="formulario.controls.modalidade.value === 'entrega'">
+        <input type="radio" class="somente-leitor-tela" formControlName="modalidade" value="entrega" />
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7v10l8 4 8-4V7l-8-4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none" /><path d="M4 7l8 4 8-4M12 11v10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+        Entrega
+      </label>
+    </div>
+  </div>
+
+  @if (formulario.controls.modalidade.value === 'entrega') {
+    <app-campo-formulario idCampo="endereco" rotulo="Endereço completo" [obrigatorio]="true" [erro]="erroDoCampo('endereco')">
+      <div class="entradaComIcone">
+        <svg class="iconeEntrada" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none" />
+          <circle cx="12" cy="9.5" r="2.4" stroke="currentColor" stroke-width="1.6" fill="none" />
+        </svg>
+        <textarea
+          id="endereco"
+          class="entrada campoComIcone"
+          formControlName="endereco"
+          rows="2"
+          placeholder="Rua, número, bairro..."
+        ></textarea>
+      </div>
+    </app-campo-formulario>
+  }
+
+  <app-campo-formulario idCampo="dataDesejada" rotulo="Data desejada" [obrigatorio]="true" [erro]="erroDoCampo('dataDesejada')">
+    <input id="dataDesejada" type="date" class="entrada" formControlName="dataDesejada" [min]="dataMinima" />
+  </app-campo-formulario>
+
+  <app-campo-formulario idCampo="observacoes" rotulo="Observações" dica="Opcional — alguma informação extra sobre o pedido.">
+    <textarea id="observacoes" class="entrada" formControlName="observacoes" rows="3"></textarea>
+  </app-campo-formulario>
+</form>

@@ -1,0 +1,65 @@
+<div class="galeria">
+  <div
+    class="visor"
+    #visor
+    (pointerdown)="aoPressionar($event)"
+    (pointermove)="aoMover($event)"
+    (pointerup)="aoSoltar($event)"
+    (pointercancel)="aoSoltar($event)"
+  >
+    <div class="trilho" [class.arrastando]="arrastando()" [style.transform]="transformTrilho()">
+      @for (imagem of imagens(); track imagem + '-' + $index; let indice = $index) {
+        <div class="quadro">
+          @if (imagemFalhou(indice)) {
+            <div class="espacoReservado" role="img" [attr.aria-label]="produto().nome">
+              <app-icone-categoria [categoria]="produto().categoria" />
+            </div>
+          } @else {
+            <img
+              [src]="imagem"
+              [alt]="produto().nome + ' - foto ' + (indice + 1)"
+              draggable="false"
+              (error)="marcarFalha(indice)"
+            />
+          }
+        </div>
+      }
+    </div>
+
+    @if (imagens().length > 1) {
+      <button
+        type="button"
+        class="setaGaleria setaAnterior"
+        [disabled]="!temAnterior()"
+        aria-label="Foto anterior"
+        (click)="irParaAnterior()"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+      </button>
+      <button
+        type="button"
+        class="setaGaleria setaProxima"
+        [disabled]="!temProxima()"
+        aria-label="Próxima foto"
+        (click)="irParaProxima()"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+      </button>
+    }
+  </div>
+
+  @if (imagens().length > 1) {
+    <div class="pontos" role="group" aria-label="Fotos do produto">
+      @for (imagem of imagens(); track imagem + '-' + $index; let indice = $index) {
+        <button
+          type="button"
+          class="ponto"
+          [class.ativo]="indiceAtual() === indice"
+          [attr.aria-label]="'Ver foto ' + (indice + 1)"
+          [attr.aria-current]="indiceAtual() === indice"
+          (click)="irParaImagem(indice)"
+        ></button>
+      }
+    </div>
+  }
+</div>

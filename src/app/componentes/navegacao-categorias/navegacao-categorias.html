@@ -1,0 +1,28 @@
+<nav class="navegacao" aria-label="Categorias de produtos">
+  <ul class="lista">
+    <li>
+      <button
+        type="button"
+        class="pilula"
+        [class.ativa]="categoriaSelecionada() === ''"
+        [attr.aria-pressed]="categoriaSelecionada() === ''"
+        (click)="categoriaSelecionada.set('')"
+      >
+        Todos
+      </button>
+    </li>
+    @for (categoria of categorias(); track categoria.id) {
+      <li>
+        <button
+          type="button"
+          class="pilula"
+          [class.ativa]="categoriaSelecionada() === categoria.id"
+          [attr.aria-pressed]="categoriaSelecionada() === categoria.id"
+          (click)="categoriaSelecionada.set(categoria.id)"
+        >
+          {{ categoria.nome }}
+        </button>
+      </li>
+    }
+  </ul>
+</nav>

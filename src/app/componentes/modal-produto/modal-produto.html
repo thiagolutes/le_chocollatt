@@ -1,0 +1,88 @@
+<div
+  class="fundo"
+  [class.fechando]="fechando()"
+  (click)="aoClicarFundo($event)"
+  (keydown.escape)="iniciarFechamento()"
+  (keydown.arrowLeft)="aoTeclaNavegacao($event, 'anterior')"
+  (keydown.arrowRight)="aoTeclaNavegacao($event, 'proxima')"
+>
+  <div
+    class="painel"
+    [class.fechando]="fechando()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-produto-titulo"
+    tabindex="-1"
+    #painel
+  >
+    <button type="button" class="botaoFechar" (click)="iniciarFechamento()" aria-label="Fechar detalhes do produto">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+    </button>
+
+    @if (mostrarNavegacaoProdutos()) {
+      <button type="button" class="setaProduto setaProdutoAnterior" aria-label="Produto anterior" (click)="navegarProduto('anterior')">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+      </button>
+      <button type="button" class="setaProduto setaProdutoProxima" aria-label="Próximo produto" (click)="navegarProduto('proxima')">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+      </button>
+    }
+
+    <div
+      class="conteudo"
+      [class.saindoProxima]="trocandoProduto() === 'proxima'"
+      [class.saindoAnterior]="trocandoProduto() === 'anterior'"
+    >
+      <app-galeria-produto [imagens]="imagensGaleria()" [produto]="produto()" />
+
+      <h2 id="modal-produto-titulo" class="nome">{{ produto().nome }}</h2>
+      <p class="descricao">{{ produto().descricao }}</p>
+
+      @if (variacoes().length > 0) {
+        <fieldset class="variacoes">
+          <legend class="rotuloSecao">Escolha uma opção</legend>
+          <div class="opcoes">
+            @for (variacao of variacoes(); track variacao.id) {
+              <label class="opcao" [class.selecionada]="variacaoSelecionada()?.id === variacao.id">
+                <input
+                  type="radio"
+                  name="variacao"
+                  class="somente-leitor-tela"
+                  [value]="variacao.id"
+                  [checked]="variacaoSelecionada()?.id === variacao.id"
+                  (change)="selecionarVariacao(variacao)"
+                />
+                <span>{{ variacao.nome }}</span>
+              </label>
+            }
+          </div>
+        </fieldset>
+      }
+
+      <div class="linhaQuantidade">
+        <span class="rotuloSecao">Quantidade</span>
+        <div class="seletorQuantidade">
+          <button type="button" (click)="diminuirQuantidade()" [disabled]="quantidade() <= 1" aria-label="Diminuir quantidade">−</button>
+          <input
+            type="number"
+            min="1"
+            max="50"
+            [value]="quantidade()"
+            (change)="atualizarQuantidade($event)"
+            (keydown.enter)="atualizarQuantidade($event)"
+            aria-label="Quantidade"
+            class="inputQuantidade"
+          />
+          <button type="button" (click)="aumentarQuantidade()" aria-label="Aumentar quantidade">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="rodape">
+      <span class="subtotal">{{ formatarMoeda(subtotal()) }}</span>
+      <app-botao (click)="adicionarAoCarrinho()">Adicionar ao carrinho</app-botao>
+    </div>
+  </div>
+</div>

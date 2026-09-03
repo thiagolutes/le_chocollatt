@@ -1,0 +1,12 @@
+<button
+  [attr.type]="tipo()"
+  [attr.form]="formulario()"
+  [disabled]="desabilitado()"
+  class="botao"
+  [class.primario]="variante() === 'primario'"
+  [class.secundario]="variante() === 'secundario'"
+  [class.texto]="variante() === 'texto'"
+  [class.larguraTotal]="larguraTotal()"
+>
+  <ng-content></ng-content>
+</button>

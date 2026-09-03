@@ -1,0 +1,31 @@
+<article class="cartao">
+  <button
+    type="button"
+    class="botaoCartao"
+    (click)="aoAbrir()"
+    (mouseenter)="emHover.set(true)"
+    (mouseleave)="emHover.set(false)"
+    (focus)="emHover.set(true)"
+    (blur)="emHover.set(false)"
+    [disabled]="!produto().disponivel"
+    [attr.aria-label]="'Ver detalhes de ' + produto().nome"
+  >
+    <app-imagem-produto [produto]="produto()" [destacado]="emHover()" />
+
+    <div class="info">
+      <div class="textoCartao">
+        @if (produto().destaque && produto().disponivel) {
+          <span class="destaque rotulo-versalete">Destaque</span>
+        }
+        <h3 class="nome">{{ produto().nome }}</h3>
+        <p class="descricao">{{ produto().descricao }}</p>
+      </div>
+      <div class="rodapeCartao">
+        <span class="preco">{{ precoExibicao() }}</span>
+        @if (!produto().disponivel) {
+          <span class="indisponivelRotulo">Indisponível</span>
+        }
+      </div>
+    </div>
+  </button>
+</article>
