@@ -1,0 +1,178 @@
+.pagina {
+  padding-block: var(--espaco-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+}
+
+.cabecalhoAdmin {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+}
+
+.navAdmin {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-4);
+  font-size: var(--texto-sm);
+}
+
+.navAdmin a {
+  color: var(--cor-marrom-medio);
+  text-decoration: none;
+}
+
+.navAdmin a.linkAtivo {
+  color: var(--cor-marrom-escuro);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.botaoSair {
+  background: none;
+  border: none;
+  color: var(--cor-erro);
+  font-size: var(--texto-sm);
+  cursor: pointer;
+  padding: 0;
+}
+
+.mensagemErro {
+  color: var(--cor-erro);
+  background-color: rgba(154, 59, 46, 0.08);
+  border: 1px solid var(--cor-erro);
+  border-radius: var(--raio-medio);
+  padding: var(--espaco-3);
+}
+
+.acoesTopo {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tabelaContainer {
+  overflow-x: auto;
+  border: var(--borda-fina);
+  border-radius: var(--raio-medio);
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--texto-sm);
+  background-color: var(--cor-creme-secundario);
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--espaco-3);
+  text-align: left;
+  border-bottom: var(--borda-fina);
+  white-space: nowrap;
+}
+
+.acoesLinha {
+  display: flex;
+  gap: var(--espaco-2);
+}
+
+.botaoLinha {
+  background: none;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-pequeno);
+  padding: 0.3rem 0.6rem;
+  font-size: var(--texto-xs);
+  cursor: pointer;
+  color: var(--cor-marrom-escuro);
+}
+
+.botaoLinhaPerigo {
+  color: var(--cor-erro);
+  border-color: var(--cor-erro);
+}
+
+.formularioProduto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  background-color: var(--cor-creme-secundario);
+  border: var(--borda-fina);
+  border-radius: var(--raio-grande);
+  padding: var(--espaco-5);
+}
+
+.grade2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espaco-4);
+}
+
+.grade2 > * {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .grade2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.linhaFlags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-5);
+  font-size: var(--texto-sm);
+}
+
+.linhaFlags label {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.blocoVariacoes {
+  border-top: var(--borda-fina);
+  padding-top: var(--espaco-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.cabecalhoVariacoes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dicaVazia {
+  font-size: var(--texto-sm);
+  color: var(--cor-marrom-suave);
+}
+
+.linhaVariacao {
+  display: grid;
+  grid-template-columns: 1fr 8rem 1fr auto;
+  gap: var(--espaco-2);
+  align-items: center;
+}
+
+/* Sem isso, os <input> dentro do grid não encolhem abaixo do próprio conteúdo
+   mínimo e a linha inteira acaba empurrando o formulário pra fora da tela. */
+.linhaVariacao > * {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .linhaVariacao {
+    grid-template-columns: 1fr;
+  }
+}
+
+.acoesFormulario {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--espaco-3);
+}

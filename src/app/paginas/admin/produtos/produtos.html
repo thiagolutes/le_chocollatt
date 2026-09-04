@@ -1,0 +1,150 @@
+<section class="container pagina">
+  <header class="cabecalhoAdmin">
+    <h1>Produtos</h1>
+    <nav class="navAdmin">
+      <a routerLink="/admin/produtos" class="linkAtivo">Produtos</a>
+      <a routerLink="/admin/configuracoes">Configurações da loja</a>
+      <button type="button" class="botaoSair" (click)="sair()">Sair</button>
+    </nav>
+  </header>
+
+  @if (erro()) {
+    <p class="mensagemErro" role="alert">{{ erro() }}</p>
+  }
+
+  @if (!formularioAberto()) {
+    <div class="acoesTopo">
+      <app-botao (click)="abrirNovoProduto()">Novo produto</app-botao>
+    </div>
+
+    @if (carregando()) {
+      <p>Carregando produtos...</p>
+    } @else if (produtos().length === 0) {
+      <p>Nenhum produto cadastrado ainda.</p>
+    } @else {
+      <div class="tabelaContainer">
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th>Preço</th>
+              <th>Ativo</th>
+              <th>Disponível</th>
+              <th>Destaque</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (produto of produtos(); track produto.id) {
+              <tr>
+                <td>{{ produto.nome }}</td>
+                <td>{{ nomeCategoria(produto.categoriaId) }}</td>
+                <td>R$ {{ produto.preco.toFixed(2) }}</td>
+                <td>{{ produto.ativo ? 'Sim' : 'Não' }}</td>
+                <td>{{ produto.disponivel ? 'Sim' : 'Não' }}</td>
+                <td>{{ produto.destaque ? 'Sim' : 'Não' }}</td>
+                <td class="acoesLinha">
+                  <button type="button" class="botaoLinha" (click)="abrirEdicaoProduto(produto.id)">Editar</button>
+                  <button type="button" class="botaoLinha botaoLinhaPerigo" (click)="excluir(produto)">Excluir</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  } @else {
+    <form class="formularioProduto" [formGroup]="formulario" (ngSubmit)="salvar()" novalidate>
+      <h2>{{ idEmEdicao() ? 'Editar produto' : 'Novo produto' }}</h2>
+
+      <div class="grade2">
+        <app-campo-formulario idCampo="nome" rotulo="Nome" [obrigatorio]="true">
+          <input id="nome" type="text" class="entrada" formControlName="nome" />
+        </app-campo-formulario>
+
+        <app-campo-formulario idCampo="slug" rotulo="Slug" dica="Opcional — gerado a partir do nome se vazio.">
+          <input id="slug" type="text" class="entrada" formControlName="slug" />
+        </app-campo-formulario>
+      </div>
+
+      <app-campo-formulario idCampo="descricao" rotulo="Descrição">
+        <textarea id="descricao" class="entrada" formControlName="descricao" rows="2"></textarea>
+      </app-campo-formulario>
+
+      <div class="grade2">
+        <app-campo-formulario idCampo="categoriaId" rotulo="Categoria" [obrigatorio]="true">
+          <select id="categoriaId" class="entrada" formControlName="categoriaId">
+            <option [value]="0" disabled>Selecione</option>
+            @for (categoria of categorias(); track categoria.id) {
+              <option [value]="categoria.id">{{ categoria.nome }}</option>
+            }
+          </select>
+        </app-campo-formulario>
+
+        <app-campo-formulario idCampo="preco" rotulo="Preço (R$)" [obrigatorio]="true">
+          <input id="preco" type="number" step="0.01" min="0" class="entrada" formControlName="preco" />
+        </app-campo-formulario>
+      </div>
+
+      <div class="grade2">
+        <app-campo-formulario idCampo="imagemCapa" rotulo="Imagem de capa" dica="Caminho ou URL da foto principal.">
+          <input id="imagemCapa" type="text" class="entrada" formControlName="imagemCapa" />
+        </app-campo-formulario>
+
+        <app-campo-formulario idCampo="ordem" rotulo="Ordem de exibição">
+          <input id="ordem" type="number" class="entrada" formControlName="ordem" />
+        </app-campo-formulario>
+      </div>
+
+      <app-campo-formulario idCampo="imagens" rotulo="Galeria" dica="Uma URL por linha.">
+        <textarea id="imagens" class="entrada" formControlName="imagens" rows="3"></textarea>
+      </app-campo-formulario>
+
+      <div class="grade2">
+        <app-campo-formulario idCampo="unidade" rotulo="Unidade" dica="Ex.: unidade, copo.">
+          <input id="unidade" type="text" class="entrada" formControlName="unidade" />
+        </app-campo-formulario>
+
+        <app-campo-formulario idCampo="tempoPreparo" rotulo="Tempo de preparo">
+          <input id="tempoPreparo" type="text" class="entrada" formControlName="tempoPreparo" />
+        </app-campo-formulario>
+      </div>
+
+      <app-campo-formulario idCampo="observacao" rotulo="Observação">
+        <input id="observacao" type="text" class="entrada" formControlName="observacao" />
+      </app-campo-formulario>
+
+      <div class="linhaFlags">
+        <label><input type="checkbox" formControlName="ativo" /> Ativo (aparece no catálogo)</label>
+        <label><input type="checkbox" formControlName="disponivel" /> Disponível (pode ser pedido)</label>
+        <label><input type="checkbox" formControlName="destaque" /> Destaque</label>
+      </div>
+
+      <div class="blocoVariacoes">
+        <div class="cabecalhoVariacoes">
+          <h3>Variações</h3>
+          <button type="button" class="botaoLinha" (click)="adicionarVariacao()">+ Adicionar variação</button>
+        </div>
+
+        @if (variacoes.controls.length === 0) {
+          <p class="dicaVazia">Sem variações — o produto tem preço único.</p>
+        }
+
+        @for (linha of variacoes.controls; track $index) {
+          <div class="linhaVariacao" [formGroup]="linha">
+            <input type="text" class="entrada" placeholder="Nome (ex.: Ao Leite)" formControlName="nome" />
+            <input type="number" step="0.01" min="0" class="entrada" placeholder="Preço" formControlName="preco" />
+            <input type="text" class="entrada" placeholder="Imagens (uma por linha)" formControlName="imagens" />
+            <button type="button" class="botaoLinha botaoLinhaPerigo" (click)="removerVariacao($index)">Remover</button>
+          </div>
+        }
+      </div>
+
+      <div class="acoesFormulario">
+        <app-botao variante="texto" tipo="button" (click)="fecharFormulario()">Cancelar</app-botao>
+        <app-botao tipo="submit" [desabilitado]="salvando()">{{ salvando() ? 'Salvando...' : 'Salvar' }}</app-botao>
+      </div>
+    </form>
+  }
+</section>

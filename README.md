@@ -1,64 +1,51 @@
-<<<<<<< HEAD
-# LeChocolat
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3.
-
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-=======
 # le_chocollatt
-Site da le_chocollatt
->>>>>>> c15a09ecdffc47ae9d36c2eb26219cc86e8010a0
+
+Site da loja Le Chocollatt (Angular 21, standalone components, signals): vitrine pública de
+produtos + área administrativa (login, CRUD de produtos, configurações da loja).
+
+Os dados (produtos, categorias, configurações) vêm da API [`le-chocollatt-api`](../le-chocollatt-api)
+— este projeto não tem mais catálogo hardcoded.
+
+## Rodando localmente
+
+Pré-requisito: a API (`le-chocollatt-api`) rodando em `http://localhost:8080` (ver o README dela).
+
+```bash
+npm install
+npm start
+```
+
+Abre em `http://localhost:4200`.
+
+- Vitrine pública: `/`
+- Login do admin: `/admin/login`
+- Admin de produtos: `/admin/produtos`
+- Configurações da loja: `/admin/configuracoes`
+
+## Build de produção
+
+```bash
+npm run build
+```
+
+Antes de buildar para produção, edite `src/environments/environment.prod.ts` com a URL pública
+real da API.
+
+## Estrutura
+
+```
+src/app/
+  componentes/      componentes de UI reutilizáveis (vitrine)
+  paginas/           páginas roteadas (pagina-inicial, admin/*)
+  paginas/admin/     login, produtos (CRUD), configuracoes
+  servicos/          lógica de carrinho, chamadas HTTP à API, auth
+  interceptors/      injeta o JWT nas chamadas autenticadas
+  guards/            protege as rotas /admin/**
+  tipos/             modelos usados pela vitrine (produto, pedido, loja, auth, admin)
+```
+
+## Testes
+
+```bash
+npm test
+```

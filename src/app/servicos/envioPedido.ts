@@ -1,4 +1,4 @@
-import { configuracoesLoja } from "../dados/configuracoesLoja";
+import type { ConfiguracaoLoja } from "../tipos/loja";
 import type { DadosCliente } from "../tipos/pedido";
 import type { CarrinhoProcessado } from "../tipos/pedido";
 import { formatarDataBrasileira } from "../utilitarios/formatacaoData";
@@ -14,10 +14,14 @@ const rotuloModalidade: Record<DadosCliente["modalidade"], string> = {
  * já recalculado na hora (ver `calculoCarrinho.processarCarrinho`), nunca com
  * valores antigos guardados em estado ou no localStorage.
  */
-export function montarMensagemPedido(dados: DadosCliente, carrinho: CarrinhoProcessado): string {
+export function montarMensagemPedido(
+  configuracaoLoja: ConfiguracaoLoja,
+  dados: DadosCliente,
+  carrinho: CarrinhoProcessado,
+): string {
   const linhas: string[] = [];
 
-  linhas.push(`Olá! Gostaria de fazer um pedido na ${configuracoesLoja.nome}.`, "");
+  linhas.push(`Olá! Gostaria de fazer um pedido na ${configuracaoLoja.nome}.`, "");
 
   linhas.push("DADOS DO CLIENTE");
   linhas.push(`Nome: ${dados.nome}`);
@@ -58,14 +62,15 @@ export function montarMensagemPedido(dados: DadosCliente, carrinho: CarrinhoProc
  * área de transferência à parte (ver `Carrinho.aoConfirmarPedido`) e o
  * cliente cola manualmente na conversa.
  */
-export function montarLinkInstagram(): string {
-  const usuario = configuracoesLoja.instagram.replace(/^@/, "");
+export function montarLinkInstagram(configuracaoLoja: ConfiguracaoLoja): string {
+  const usuario = configuracaoLoja.instagram.replace(/^@/, "");
   return `https://ig.me/m/${usuario}`;
 }
 
-// Envio via WhatsApp — reative junto com a opção correspondente em
-// `Carrinho` quando a loja tiver o número oficial configurado em
-// `configuracoesLoja.telefoneWhatsApp`.
-// export function montarLinkWhatsApp(mensagem: string): string {
-//   return `https://wa.me/${configuracoesLoja.telefoneWhatsApp}?text=${encodeURIComponent(mensagem)}`;
-// }
+/**
+ * Link do WhatsApp já com o texto do pedido preenchido — diferente do
+ * Instagram, não precisa de copiar/colar manual.
+ */
+export function montarLinkWhatsApp(configuracaoLoja: ConfiguracaoLoja, mensagem: string): string {
+  return `https://wa.me/${configuracaoLoja.telefoneWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+}

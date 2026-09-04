@@ -1,5 +1,5 @@
-import { Component, input } from '@angular/core';
-import { configuracoesLoja } from '../../dados/configuracoesLoja';
+import { Component, inject, input } from '@angular/core';
+import { DadosLojaServico } from '../../servicos/dados-loja-servico';
 
 /** Wordmark da loja, recriado a partir do padrão visual observado no logo oficial. */
 @Component({
@@ -12,6 +12,7 @@ export class Marca {
   readonly como = input<'h1' | 'p'>('p');
   readonly tamanho = input<'padrao' | 'grande'>('padrao');
 
-  protected readonly nomeLoja = configuracoesLoja.nome;
-  protected readonly subtituloLoja = configuracoesLoja.subtitulo;
+  private readonly configuracaoLoja = inject(DadosLojaServico).configuracaoLoja();
+  protected readonly nomeLoja = this.configuracaoLoja.nome;
+  protected readonly subtituloLoja = this.configuracaoLoja.subtitulo;
 }

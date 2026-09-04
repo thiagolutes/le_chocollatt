@@ -1,9 +1,9 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { BuscaProdutos } from '../../componentes/busca-produtos/busca-produtos';
 import { ListaProdutos } from '../../componentes/lista-produtos/lista-produtos';
 import { ModalProduto } from '../../componentes/modal-produto/modal-produto';
 import { NavegacaoCategorias } from '../../componentes/navegacao-categorias/navegacao-categorias';
-import { categorias, produtosAtivos } from '../../dados/produtos';
+import { DadosLojaServico } from '../../servicos/dados-loja-servico';
 import type { Produto } from '../../tipos/produto';
 
 @Component({
@@ -13,7 +13,9 @@ import type { Produto } from '../../tipos/produto';
   styleUrl: './pagina-inicial.css',
 })
 export class PaginaInicial {
-  protected readonly categorias = categorias;
+  private readonly dadosLojaServico = inject(DadosLojaServico);
+
+  protected readonly categorias = this.dadosLojaServico.categoriasComProdutos;
 
   protected readonly termoBusca = signal('');
   protected readonly categoriaSelecionada = signal('');
@@ -28,7 +30,9 @@ export class PaginaInicial {
     const termo = this.termoBusca().trim().toLowerCase();
     const categoria = this.categoriaSelecionada();
 
-    return produtosAtivos
+    return this.dadosLojaServico
+      .produtos()
+      .filter((produto) => produto.ativo)
       .filter((produto) => (categoria ? produto.categoria === categoria : true))
       .filter((produto) => (termo ? produto.nome.toLowerCase().includes(termo) : true))
       .sort((a, b) => (a.ordem ?? 0) - (b.ordem ?? 0));

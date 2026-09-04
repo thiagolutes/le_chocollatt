@@ -1,0 +1,24 @@
+<section class="pagina">
+  <div class="cartao">
+    <app-marca como="h1" />
+    <h2 class="titulo">Área administrativa</h2>
+
+    <form class="formulario" [formGroup]="formulario" (ngSubmit)="aoSubmeter()" novalidate>
+      <app-campo-formulario idCampo="email" rotulo="Email" [obrigatorio]="true">
+        <input id="email" type="email" class="entrada" formControlName="email" autocomplete="username" />
+      </app-campo-formulario>
+
+      <app-campo-formulario idCampo="senha" rotulo="Senha" [obrigatorio]="true">
+        <input id="senha" type="password" class="entrada" formControlName="senha" autocomplete="current-password" />
+      </app-campo-formulario>
+
+      @if (erro()) {
+        <p class="erroLogin" role="alert">{{ erro() }}</p>
+      }
+
+      <app-botao tipo="submit" [larguraTotal]="true" [desabilitado]="enviando()">
+        {{ enviando() ? 'Entrando...' : 'Entrar' }}
+      </app-botao>
+    </form>
+  </div>
+</section>

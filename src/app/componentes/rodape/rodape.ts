@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { configuracoesLoja } from '../../dados/configuracoesLoja';
+import { Component, inject } from '@angular/core';
+import { DadosLojaServico } from '../../servicos/dados-loja-servico';
 import { Marca } from '../marca/marca';
 import { Ornamento } from '../ornamento/ornamento';
 
@@ -10,5 +10,5 @@ import { Ornamento } from '../ornamento/ornamento';
   styleUrl: './rodape.css',
 })
 export class Rodape {
-  protected readonly config = configuracoesLoja;
+  protected readonly config = inject(DadosLojaServico).configuracaoLoja();
 }

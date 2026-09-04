@@ -47,9 +47,15 @@
         }
         @case ('enviado') {
           <div class="confirmacaoEnvio">
-            <p class="confirmacaoTexto">
-              Sua mensagem foi copiada! Abra o Instagram e cole (Ctrl+V) na conversa com a gente para completar seu pedido.
-            </p>
+            @if (nenhumCanalConfigurado()) {
+              <p class="confirmacaoTexto">
+                A loja ainda não configurou um canal de atendimento. Copie a mensagem abaixo e envie por Instagram ou WhatsApp diretamente.
+              </p>
+            } @else {
+              <p class="confirmacaoTexto">
+                Quase lá! Escolha abaixo por onde quer enviar seu pedido.
+              </p>
+            }
             <div class="mensagemPronta">
               <pre>{{ mensagemEnviada() }}</pre>
             </div>
@@ -77,13 +83,18 @@
           @case ('revisao') {
             <div class="acoesRodape">
               <app-botao variante="texto" (click)="etapa.set('formulario')">Voltar e editar</app-botao>
-              <app-botao (click)="aoConfirmarPedido()">Confirmar e enviar via Instagram</app-botao>
+              <app-botao (click)="aoConfirmarPedido()">{{ textoConfirmar() }}</app-botao>
             </div>
           }
           @case ('enviado') {
             <div class="acoesRodape">
               <app-botao variante="texto" (click)="iniciarFechamento()">Fechar</app-botao>
-              <app-botao [larguraTotal]="false" (click)="enviarViaInstagram()">Enviar via Instagram</app-botao>
+              @if (aceitaInstagram()) {
+                <app-botao (click)="enviarViaInstagram()">Enviar via Instagram</app-botao>
+              }
+              @if (aceitaWhatsapp()) {
+                <app-botao (click)="enviarViaWhatsapp()">Enviar via WhatsApp</app-botao>
+              }
             </div>
           }
         }

@@ -1,0 +1,86 @@
+<section class="container pagina">
+  <header class="cabecalhoAdmin">
+    <h1>Configurações da loja</h1>
+    <nav class="navAdmin">
+      <a routerLink="/admin/produtos">Produtos</a>
+      <a routerLink="/admin/configuracoes" class="linkAtivo">Configurações da loja</a>
+      <button type="button" class="botaoSair" (click)="sair()">Sair</button>
+    </nav>
+  </header>
+
+  @if (erro()) {
+    <p class="mensagemErro" role="alert">{{ erro() }}</p>
+  }
+  @if (sucesso()) {
+    <p class="mensagemSucesso" role="status">Configurações salvas com sucesso.</p>
+  }
+
+  <form class="formularioConfig" [formGroup]="formulario" (ngSubmit)="salvar()" novalidate>
+    <div class="grade2">
+      <app-campo-formulario idCampo="nome" rotulo="Nome da loja" [obrigatorio]="true">
+        <input id="nome" type="text" class="entrada" formControlName="nome" />
+      </app-campo-formulario>
+
+      <app-campo-formulario idCampo="subtitulo" rotulo="Subtítulo">
+        <input id="subtitulo" type="text" class="entrada" formControlName="subtitulo" />
+      </app-campo-formulario>
+    </div>
+
+    <app-campo-formulario idCampo="frase" rotulo="Frase de destaque" dica="Aparece no cabeçalho do site.">
+      <input id="frase" type="text" class="entrada" formControlName="frase" />
+    </app-campo-formulario>
+
+    <app-campo-formulario idCampo="fraseComplementar" rotulo="Frase do rodapé">
+      <input id="fraseComplementar" type="text" class="entrada" formControlName="fraseComplementar" />
+    </app-campo-formulario>
+
+    <div class="grade2">
+      <app-campo-formulario idCampo="cidade" rotulo="Cidade">
+        <input id="cidade" type="text" class="entrada" formControlName="cidade" />
+      </app-campo-formulario>
+
+      <app-campo-formulario idCampo="estado" rotulo="Estado (UF)">
+        <input id="estado" type="text" maxlength="2" class="entrada" formControlName="estado" />
+      </app-campo-formulario>
+    </div>
+
+    <app-campo-formulario idCampo="diasMinimosEncomenda" rotulo="Dias mínimos para encomenda" [obrigatorio]="true">
+      <input id="diasMinimosEncomenda" type="number" min="0" class="entrada" formControlName="diasMinimosEncomenda" />
+    </app-campo-formulario>
+
+    <app-campo-formulario idCampo="formasPagamento" rotulo="Formas de pagamento" dica="Uma por linha (ex.: Cartão, Pix, Dinheiro).">
+      <textarea id="formasPagamento" class="entrada" formControlName="formasPagamento" rows="3"></textarea>
+    </app-campo-formulario>
+
+    <div class="blocoCanais">
+      <h2>Canais de atendimento para receber pedidos</h2>
+      <p class="dicaCanais">
+        Controla quais botões aparecem para o cliente enviar o pedido no fim da compra.
+      </p>
+
+      <label class="linhaCanal">
+        <input type="checkbox" formControlName="aceitaInstagram" />
+        <span>Aceitar pedidos via Instagram Direct</span>
+      </label>
+      @if (formulario.controls.aceitaInstagram.value) {
+        <app-campo-formulario idCampo="instagramHandle" rotulo="Usuário do Instagram" dica="Ex.: @le_chocollatt">
+          <input id="instagramHandle" type="text" class="entrada" formControlName="instagramHandle" />
+        </app-campo-formulario>
+      }
+
+      <label class="linhaCanal">
+        <input type="checkbox" formControlName="aceitaWhatsapp" />
+        <span>Aceitar pedidos via WhatsApp</span>
+      </label>
+      @if (formulario.controls.aceitaWhatsapp.value) {
+        <app-campo-formulario idCampo="telefoneWhatsapp" rotulo="Número do WhatsApp" dica="Só dígitos, com DDI e DDD (ex.: 5531999999999).">
+          <input id="telefoneWhatsapp" type="text" class="entrada" formControlName="telefoneWhatsapp" />
+        </app-campo-formulario>
+      }
+    </div>
+
+    <div class="acoesFormulario">
+      <app-botao tipo="submit" [desabilitado]="salvando()">{{ salvando() ? 'Salvando...' : 'Salvar configurações' }}</app-botao>
+    </div>
+  </form>
+</section>

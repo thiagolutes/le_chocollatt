@@ -1,7 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, DestroyRef, ElementRef, afterNextRender, computed, inject, output, signal, viewChild } from '@angular/core';
 import { CarrinhoServico } from '../../servicos/carrinho-servico';
-import { montarLinkInstagram, montarMensagemPedido /* , montarLinkWhatsApp */ } from '../../servicos/envioPedido';
+import { DadosLojaServico } from '../../servicos/dados-loja-servico';
+import { montarLinkInstagram, montarLinkWhatsApp, montarMensagemPedido } from '../../servicos/envioPedido';
 import { dadosClienteVazio } from '../../tipos/pedido';
 import type { DadosCliente } from '../../tipos/pedido';
 import { criarFechamentoAnimado } from '../../utilitarios/fechamentoAnimado';
@@ -28,6 +29,7 @@ const titulosPorEtapa: Record<EtapaCarrinho, string> = {
 })
 export class Carrinho {
   protected readonly carrinhoServico = inject(CarrinhoServico);
+  private readonly dadosLojaServico = inject(DadosLojaServico);
   private readonly documento = inject(DOCUMENT);
 
   readonly fechar = output<void>();
@@ -41,6 +43,19 @@ export class Carrinho {
   );
   protected readonly formatarMoeda = formatarMoeda;
   protected readonly mensagemEnviada = signal('');
+
+  /** Quais canais a loja aceita — configurável pelo admin (config da loja). */
+  protected readonly aceitaInstagram = computed(() => this.dadosLojaServico.configuracaoLoja().aceitaInstagram);
+  protected readonly aceitaWhatsapp = computed(() => this.dadosLojaServico.configuracaoLoja().aceitaWhatsapp);
+  protected readonly nenhumCanalConfigurado = computed(
+    () => !this.aceitaInstagram() && !this.aceitaWhatsapp(),
+  );
+  protected readonly textoConfirmar = computed(() => {
+    if (this.aceitaInstagram() && this.aceitaWhatsapp()) return 'Confirmar pedido';
+    if (this.aceitaInstagram()) return 'Confirmar e enviar via Instagram';
+    if (this.aceitaWhatsapp()) return 'Confirmar e enviar via WhatsApp';
+    return 'Confirmar pedido';
+  });
 
   private readonly fechamento = criarFechamentoAnimado(() => this.fechar.emit());
   protected readonly fechando = this.fechamento.fechando;
@@ -65,34 +80,43 @@ export class Carrinho {
   }
 
   /**
-   * Canal de envio atual: Instagram Direct. Diferente do WhatsApp, o
-   * Instagram não aceita pré-preencher o texto da mensagem — por isso
-   * copiamos o pedido pra área de transferência na etapa "enviado" e o
-   * cliente pode colar manualmente. A etapa "enviado" deixa o texto visível
-   * caso o cliente precise colar manualmente ou copiar de novo.
+   * A etapa "enviado" deixa o texto do pedido visível e mostra um botão por
+   * canal habilitado na config da loja (Instagram e/ou WhatsApp).
    */
   protected async aoConfirmarPedido(): Promise<void> {
-    const mensagem = montarMensagemPedido(this.dadosCliente(), this.carrinhoServico.carrinho());
+    const mensagem = montarMensagemPedido(
+      this.dadosLojaServico.configuracaoLoja(),
+      this.dadosCliente(),
+      this.carrinhoServico.carrinho(),
+    );
     this.mensagemEnviada.set(mensagem);
 
     this.carrinhoServico.limparCarrinho();
     this.etapa.set('enviado');
   }
 
+  /**
+   * Diferente do WhatsApp, o Instagram não aceita pré-preencher o texto da
+   * mensagem — por isso o pedido é copiado pra área de transferência e o
+   * cliente cola manualmente na conversa.
+   */
   protected async enviarViaInstagram(): Promise<void> {
     const mensagem = this.mensagemEnviada();
-    
-    // Mostrar aviso antes de copiar e abrir o Instagram
+
     this.carrinhoServico.adicionarAviso({
       produtoId: '',
       mensagem: 'Atenção! Vamos copiar sua mensagem de pedido. Por favor, aguarde abrir o Instagram e cole a mensagem (Ctrl+V) na conversa com a gente. Isso garante que seu pedido chegue corretamente!'
     });
 
-    // Copiar a mensagem para a área de transferência
     await this.copiarParaAreaDeTransferencia(mensagem);
 
-    // Abrir o Instagram após copiar
-    window.open(montarLinkInstagram(), '_blank', 'noopener,noreferrer');
+    window.open(montarLinkInstagram(this.dadosLojaServico.configuracaoLoja()), '_blank', 'noopener,noreferrer');
+  }
+
+  /** O wa.me já abre a conversa com o texto pronto — sem precisar copiar/colar. */
+  protected enviarViaWhatsapp(): void {
+    const link = montarLinkWhatsApp(this.dadosLojaServico.configuracaoLoja(), this.mensagemEnviada());
+    window.open(link, '_blank', 'noopener,noreferrer');
   }
 
   private async copiarParaAreaDeTransferencia(texto: string): Promise<void> {

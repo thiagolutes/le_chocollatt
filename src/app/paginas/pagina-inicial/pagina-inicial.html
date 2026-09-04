@@ -1,7 +1,7 @@
 <section class="container pagina">
   <div class="filtros">
     <app-busca-produtos [(termo)]="termoBusca" />
-    <app-navegacao-categorias [categorias]="categorias" [(categoriaSelecionada)]="categoriaSelecionada" />
+    <app-navegacao-categorias [categorias]="categorias()" [(categoriaSelecionada)]="categoriaSelecionada" />
   </div>
 
   <app-lista-produtos [produtos]="produtosFiltrados()" (abrirProduto)="produtoSelecionado.set($event)" />

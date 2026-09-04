@@ -1,9 +1,9 @@
-import { Injectable, computed, effect, signal } from '@angular/core';
-import { produtosAtivos } from '../dados/produtos';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import type { AvisoCarrinho, CarrinhoProcessado } from '../tipos/pedido';
 import type { ItemCarrinho } from '../tipos/produto';
 import { carregarCarrinhoArmazenado, salvarCarrinhoArmazenado } from './armazenamentoCarrinho';
 import { processarCarrinho } from './calculoCarrinho';
+import { DadosLojaServico } from './dados-loja-servico';
 import { normalizarQuantidade, sanitizarItensCarrinho } from './validacaoCarrinho';
 
 function mesmoItem(item: ItemCarrinho, produtoId: string, variacaoId: string | undefined): boolean {
@@ -18,12 +18,17 @@ function mesmoItem(item: ItemCarrinho, produtoId: string, variacaoId: string | u
  */
 @Injectable({ providedIn: 'root' })
 export class CarrinhoServico {
+  private readonly dadosLojaServico = inject(DadosLojaServico);
+
   private readonly itens = signal<ItemCarrinho[]>(sanitizarItensCarrinho(carregarCarrinhoArmazenado()));
   private readonly _avisos = signal<AvisoCarrinho[]>([]);
   private readonly _aberto = signal(false);
   private readonly _itemAdicionado = signal(false);
 
-  readonly carrinho = computed<CarrinhoProcessado>(() => processarCarrinho(this.itens(), produtosAtivos));
+  readonly carrinho = computed<CarrinhoProcessado>(() => {
+    const produtosAtivos = this.dadosLojaServico.produtos().filter((produto) => produto.ativo);
+    return processarCarrinho(this.itens(), produtosAtivos);
+  });
   readonly avisos = this._avisos.asReadonly();
   /** Painel do carrinho aberto/fechado — central aqui pra qualquer tela (ex.: o modal de produto) poder abrir o carrinho sem precisar repassar outputs por vários componentes. */
   readonly aberto = this._aberto.asReadonly();
